@@ -67,10 +67,10 @@ LTTNG_TRACEPOINT_EVENT(addons_elv_merge_requests,
     TP_PROTO(struct request_queue *q, struct request *rq, struct request *next),
     TP_ARGS(q, rq, next),
     TP_FIELDS(
-        ctf_integer_hex(struct request_queue *, queue, q)
-        ctf_integer_hex(struct request *, curr, rq)
-        ctf_integer_hex(struct request *, next, next)
-    )
+                ctf_integer(  dev_t,        dev ,        rq->rq_disk ? disk_devt(rq->rq_disk) : 0                       )
+                ctf_integer(  sector_t,     rq_sector,      (rq->cmd_type == REQ_TYPE_BLOCK_PC) ? 0 : blk_rq_pos(rq)       )
+                ctf_integer(  sector_t,     nextrq_sector,      (next->cmd_type == REQ_TYPE_BLOCK_PC) ? 0 : blk_rq_pos(next)       )
+        )
 )
 
 #endif /* LTTNG_ADDONS_H_ */
