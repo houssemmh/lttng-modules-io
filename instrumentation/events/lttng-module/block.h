@@ -436,6 +436,7 @@ LTTNG_TRACEPOINT_EVENT_CLASS(block_bio_merge,
 
 	TP_FIELDS(
 		ctf_integer(dev_t, dev, bio->bi_bdev->bd_dev)
+		ctf_integer(sector_t, rq_sector, blk_rq_pos(rq))
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(3,14,0))
 		ctf_integer(sector_t, sector, bio->bi_iter.bi_sector)
 		ctf_integer(unsigned int, nr_sector, bio_sectors(bio))
